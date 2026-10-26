@@ -29,7 +29,7 @@ This museum has no building. It exists only here, where every object is a *quest
 
 [All exhibitions →]({{ site.baseurl }}/exhibitions)
 
-{% include museum/exhibition-grid.html collection="exhibitions" limit=3 %}
+{% include museum/exhibition-grid.html collection="exhibitions" limit=3 heading-level=3 %}
 
 {% include museum/section-end.html %}
 
@@ -49,7 +49,7 @@ This museum has no building. It exists only here, where every object is a *quest
 
 [All essays →]({{ site.baseurl }}/essays)
 
-{% include museum/essay-grid.html collection="essays" limit=3 %}
+{% include museum/essay-grid.html collection="essays" limit=3 heading-level=3 %}
 
 {% include museum/section-end.html %}
 
