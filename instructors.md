@@ -5,7 +5,8 @@ date: 2026-01-01
 summary: How to set up, customise, and manage the museum with a class.
 ---
 
-<span class="m-kicker">Guide for instructors</span>
+Guide for instructors
+{: .m-kicker}
 
 # Running the museum
 
@@ -15,11 +16,11 @@ Everything you need to set up the site, make it yours, and prepare students.
 ## 1. Set up
 
 1. On GitHub, click **Use this template**, then **Create a new repository**. Make it public.
-2. Go to **Settings, Pages** and set the source to **GitHub Actions** (or the branch your Xanthan docs recommend). The site appears at `https://USERNAME.github.io/REPOSITORY`.
+2. Go to **Settings, Pages** and choose **Deploy from a branch**, then select **main** and **/ (root)**. The site appears at `https://USERNAME.github.io/REPOSITORY`.
 3. Add your students under **Settings, Collaborators**.
 4. Open `_config.yml` and change:
    - `title` and `tagline`: the museum's name.
-   - `baseurl`: set to `/REPOSITORY` (your repository name).
+   - Leave the site address unset; GitHub Pages supplies it.
    - `museum.credit` and `museum.course`: shown in the footer.
 
 Press **`.`** on the repository page to edit in the browser.
@@ -132,6 +133,6 @@ Checklist before merging:
 | Problem | Try this |
 |---|---|
 | Build failed | Open the **Actions** tab, then the failed run. The message names the file and line. Usually a missing quotation mark or `---`. |
-| Styles missing | `baseurl` in `_config.yml` must match your repository name. |
+| Styles missing | Remove any old `baseurl` override from `_config.yml`; GitHub Pages supplies the correct address. |
 | Essay not on the Essays page | The file must be `essays/NAME/index.md` and have no `published: false`. |
 | Map is empty | Objects need a `geo` field. See `map.md` and the Xanthan docs. |

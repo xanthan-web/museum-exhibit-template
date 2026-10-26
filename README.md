@@ -1,6 +1,6 @@
 # Online Museum Template
 
-A website template for an **online-only museum of historical objects and essays**, built on the [Xanthan](https://github.com/xanthan-web/xanthan) framework and hosted on GitHub Pages. Designed for classes where instructors and students have little or no coding experience.
+A website template for an **online-only museum of historical objects and essays**, built on the [Xanthan](https://github.com/xanthan-web/xanthan-web.github.io) framework and hosted on GitHub Pages. Designed for classes where instructors and students have little or no coding experience.
 
 ## What you get
 
@@ -15,7 +15,7 @@ A website template for an **online-only museum of historical objects and essays*
 ## Quick start (instructors)
 
 1. Click **Use this template** on GitHub and create a public repository.
-2. In `_config.yml`, set `title`, `baseurl` (`/your-repo-name`) and the `museum:` footer lines.
+2. In `_config.yml`, set `title` and the `museum:` footer lines. GitHub Pages supplies the site address.
 3. Turn on GitHub Pages in **Settings, Pages**.
 4. Invite students as collaborators and send them the Student Guide page.
 
@@ -57,4 +57,15 @@ Edit the **THE PALETTE** and **THE FONTS** blocks at the top of `assets/css/them
 
 Ten sample objects, five sample essays and three sample exhibitions are included as stand-ins. Their images come from [The Metropolitan Museum of Art](https://www.metmuseum.org/) open-access collection (via Wikimedia Commons); the text is placeholder. Delete them when you are ready.
 
-More about Xanthan: [documentation](https://xanthan-web.github.io/xanthan/docs/).
+More about Xanthan: [documentation](https://xanthan-web.github.io/docs/).
+
+## Credits and framework updates
+
+Adapted from [Allison Love's museum template](https://github.com/allisonrlove/museum-template).
+The original sample objects, essays, and museum design are retained.
+Xanthan maintains the reusable includes, layouts, styles, and scripts; the
+exhibition pages, object entries, routes, navigation, and configuration belong
+to this starter. Its editable pages use Markdown, YAML front matter, and includes.
+
+For local preview, use the supplied Docker setup. On GitHub Pages, choose
+**Deploy from a branch → main → / (root)**.

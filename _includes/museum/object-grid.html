@@ -3,6 +3,9 @@
   and by period.
 
   Parameters:
+    - heading-level: integer, default 2; level for card titles.
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
     - items:   the object pages to show (required)
     - filters: true | false — show the filter buttons (default: true)
     - limit:   show only the first N objects (optional)
@@ -11,9 +14,16 @@
   medium from that object's own front matter, and its region and period from
   the `region:` and `year:` lines, so nothing here is ever edited by hand.
 {% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
 
-{% assign show_filters = include.filters | default: true %}
-{% assign sorted_items = include.items | sort: "year" %}
+
+{% assign show_filters = true %}
+{% if include.filters == false %}{% assign show_filters = false %}{% endif %}
+{% assign sorted_items = museum_items | sort: "year" %}
 {% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
 {% assign all_regions = sorted_items | map: "region" | compact | uniq | sort %}
 {% assign present_eras = "" %}
@@ -58,7 +68,7 @@
           <div class="m-object-image"><img src="{{ item_img | strip }}" alt="" loading="lazy"></div>
           <div class="m-object-meta">
             {% if item.object-date %}<span class="m-object-date">{{ item.object-date }}</span>{% endif %}
-            <h3 class="m-object-title">{{ item.title }}</h3>
+            <h{{ include.heading-level | default: 2 }} class="m-object-title">{{ item.title }}</h{{ include.heading-level | default: 2 }}>
             <p class="m-object-detail">{% if item.placename %}{{ item.placename }}{% endif %}{% if item.placename and item.medium %} · {% endif %}{% if item.medium %}{{ item.medium }}{% endif %}</p>
           </div>
         </a>

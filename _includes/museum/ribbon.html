@@ -3,12 +3,20 @@
   Scroll sideways to travel through time.
 
   Parameters:
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
     - items: the object pages to show (required)
 
   Needs `year:` in each object's front matter.
 {% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
 
-{% assign sorted_items = include.items | sort: "year" %}
+
+{% assign sorted_items = museum_items | sort: "year" %}
 
 {::nomarkdown}
 <div class="m-ribbon" tabindex="0" role="region" aria-label="Objects in date order. Scroll sideways.">
