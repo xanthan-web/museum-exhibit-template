@@ -1,0 +1,429 @@
+/*****************************************************
+EDITORIAL DEMO
+
+A landing-page opening with a real Xanthan passage and its editable source
+side by side. Three views show a figure, a pull quote, and a contextual note.
+The introduction pairs a serif headline, a lead, and optional illustration on
+the page surface; the demonstration has a contrasting band.
+
+Loads:    every page
+Used by:  layout/editorial-demo.html
+Needs:    base.css tokens and container grid, home.css --home-measure,
+          images.css and typography.css for the actual sample components
+Not here: ordinary figures and pull quotes (images.css, typography.css), or
+          the image-backed landing-page hero (home.css)
+*****************************************************/
+
+@media screen {
+.container > .editorial-demo {
+  grid-column: full;
+}
+
+.editorial-demo-opening {
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.editorial-demo-band {
+  padding: var(--spacing-xl) var(--spacing-md);
+  color: var(--text-section-warm);
+  background: var(--bg-section-warm);
+}
+
+.editorial-demo-inner {
+  max-width: var(--home-measure);
+  margin-inline: auto;
+}
+
+.editorial-demo-band-intro {
+  max-width: 66ch;
+  margin-bottom: var(--spacing-lg);
+}
+.editorial-demo-band-heading {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-section-warm-heading);
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.2;
+}
+.editorial-demo-band-intro p {
+  margin: 0;
+  text-align: left;
+}
+.editorial-demo-band-intro p + p { margin-top: var(--spacing-sm); }
+
+.editorial-demo-opening-grid--illustrated {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.editorial-demo-kicker {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-kicker);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.editorial-demo-heading {
+  max-width: 19ch;
+  margin: 0 0 var(--spacing-md);
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.07;
+  color: var(--text-body);
+  text-align: left;
+}
+
+.editorial-demo-lead {
+  max-width: 44ch;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-lede);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.editorial-demo-lead p { margin: 0; text-align: left; }
+
+.editorial-demo-intro {
+  max-width: 55ch;
+  margin-bottom: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.editorial-demo-intro p {
+  margin: 0;
+  text-align: left;
+}
+
+.editorial-demo-intro p + p {
+  margin-top: var(--spacing-sm);
+}
+
+.editorial-demo-opening-figure {
+  max-width: 23rem;
+  justify-self: end;
+}
+
+.editorial-demo-opening-figure figure { margin: 0; }
+.editorial-demo-opening-figure img { border-radius: var(--radius-lg); }
+.editorial-demo-opening-figure figcaption {
+  margin-top: var(--spacing-sm);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+}
+.editorial-demo-opening-figure figcaption p { margin: 0; }
+.editorial-demo-opening-figure figcaption p + p { margin-top: var(--spacing-xs); }
+.editorial-demo-opening-figure figcaption a { color: var(--text-muted); opacity: 1; }
+.editorial-demo-opening-figure figcaption a:hover { color: var(--text-body); }
+
+.editorial-demo-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-section-warm) 25%, transparent);
+}
+
+.editorial-demo-controls[hidden],
+.editorial-demo-choices[hidden],
+.editorial-demo-panel[hidden],
+.editorial-demo-hint[hidden],
+.editorial-demo-editor[hidden],
+.editorial-demo-static-source[hidden] {
+  display: none;
+}
+
+.editorial-demo-choice {
+  padding: var(--spacing-xs) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  font: inherit;
+  color: var(--text-section-warm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.editorial-demo-choice[aria-selected="true"] {
+  border-bottom-color: var(--text-section-warm);
+  font-weight: 700;
+}
+
+.editorial-demo-choice:hover {
+  border-bottom-color: var(--text-section-warm);
+}
+
+.editorial-demo-choice:focus-visible {
+  outline: 2px solid var(--text-section-warm);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.editorial-demo-controls > div {
+  display: grid;
+  gap: var(--spacing-xs);
+  font-size: 0.85rem;
+}
+
+.editorial-demo-controls label { margin: 0; }
+
+.editorial-demo-controls select {
+  padding: var(--spacing-xs);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-body);
+  background: var(--bg-card);
+  font: inherit;
+}
+
+.editorial-demo-controls select:focus-visible {
+  outline: 2px solid var(--text-section-warm);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-description {
+  margin: 0 0 var(--spacing-md);
+  max-width: 65ch;
+  text-align: left;
+}
+
+.editorial-demo-panel + .editorial-demo-panel {
+  margin-top: var(--spacing-lg);
+}
+
+/* With JavaScript, there is one panel at a time; the margin above is for the
+   all-examples fallback, where every panel remains visible. */
+.editorial-demo[data-demo-ready] .editorial-demo-panel {
+  margin-top: 0;
+}
+
+.editorial-demo-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.editorial-demo-label {
+  display: block;
+  margin: 0 0 var(--spacing-xs);
+  color: var(--text-section-warm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.editorial-demo-page {
+  padding: var(--spacing-md);
+  color: var(--text-body);
+  background: var(--bg-card);
+}
+
+.editorial-demo-page :is(h1, h2, h3, h4, h5, h6) {
+  margin: var(--spacing-md) 0 var(--spacing-xs);
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  color: var(--text-body);
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Preserve a visible hierarchy when readers change # marks or heading-level.
+   The old story/section classes flattened every level to the same size. */
+.editorial-demo-page h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+.editorial-demo-page h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+.editorial-demo-page h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+.editorial-demo-page h4 { font-size: clamp(1.15rem, 1.7vw, 1.3rem); }
+.editorial-demo-page h5 { font-size: clamp(1.05rem, 1.4vw, 1.15rem); }
+.editorial-demo-page h6 { font-size: 1rem; }
+
+.editorial-demo-page > :first-child,
+.editorial-demo-page .editorial-demo-story-heading,
+.editorial-demo-page .alert-heading {
+  margin-top: 0;
+}
+
+.editorial-demo-page p {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+/* A normal page places the figure directly in the container grid. The small
+   article needs that same grid context so the actual include can centre itself. */
+.editorial-demo-component {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.editorial-demo-page figure {
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.editorial-demo-page figcaption p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.editorial-demo-page .pullquote {
+  max-width: 100%;
+}
+
+.editorial-demo-page .pullquote p {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-style: italic;
+}
+
+.editorial-demo-editor,
+.editorial-demo-static-source {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-body);
+  background: var(--bg-editorial-note);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  overflow: hidden;
+  resize: none;
+}
+
+.editorial-demo-static-source {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.editorial-demo-static-source code {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  white-space: inherit;
+}
+
+.editorial-demo-editor:focus-visible {
+  outline: 2px solid var(--text-section-warm);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-hint,
+.editorial-demo-error {
+  margin: var(--spacing-xs) 0 0;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.editorial-demo-error:empty {
+  display: none;
+}
+
+.editorial-demo-hint code {
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm);
+  border: 0;
+}
+
+.editorial-demo-error {
+  padding: var(--spacing-xs);
+  border-left: 2px solid var(--border-editorial-note);
+  background: var(--bg-editorial-note);
+  color: var(--text-body);
+}
+
+.editorial-demo-payoff {
+  max-width: 65ch;
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+  text-align: left;
+}
+
+.editorial-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm) var(--spacing-md);
+  align-items: center;
+}
+
+.editorial-demo-actions a,
+.editorial-demo-actions a:visited {
+  color: var(--text-section-warm-link);
+}
+
+.editorial-demo-actions a:hover {
+  color: var(--text-section-warm-link-hover);
+}
+
+.editorial-demo-actions .btn-primary,
+.editorial-demo-actions .btn-primary:visited {
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm);
+}
+
+.editorial-demo-actions .btn-primary:hover {
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm-link);
+}
+
+.editorial-demo-actions a:focus-visible {
+  outline: 2px solid var(--text-section-warm);
+  outline-offset: var(--spacing-xs);
+}
+
+@media (max-width: 850px) {
+  .editorial-demo-opening-grid--illustrated {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .editorial-demo-opening-figure {
+    max-width: 19rem;
+    justify-self: center;
+  }
+
+  .editorial-demo-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .editorial-demo-opening {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .editorial-demo-band {
+    padding-inline: var(--spacing-sm);
+  }
+
+  .editorial-demo-choice {
+    padding-block: var(--spacing-sm);
+  }
+
+  .editorial-demo-editor,
+  .editorial-demo-static-source {
+    font-size: 1rem;
+  }
+
+  .editorial-demo-controls select { font-size: 1rem; }
+}
+}

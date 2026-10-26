@@ -1,0 +1,85 @@
+{% comment %}
+  Background Switch — changes the background of an open bg-multi-long section
+
+  Drop one of these between passages of text. When the reader scrolls it past
+  the middle of the screen, the section's background image becomes this one.
+  Chain as many as the narrative needs.
+
+  Parameters:
+    - bg-id:      the id given to the bg-multi-long section this belongs to (required)
+    - switch-id:  a unique id for this switch (required)
+    - image-path: the image to switch to (required)
+
+  The marker itself is not visible; it only marks a position in the text.
+{% endcomment %}
+
+{% capture image-path %}
+{% include helpers/image-path.html image-path=include.image-path %}
+{% endcapture %}
+
+{% assign image-path = image-path | strip %}
+
+{%- comment -%}
+  A one-pixel marker gives the image change a stable position in the text
+  without adding a visible block.
+{%- endcomment -%}
+<div class="bg-switch" id="{{ include.switch-id }}"
+    data-bg-id="{{ include.bg-id }}"
+    aria-hidden="true"
+    style="height: 1px; background-image: url('{{image-path}}')">
+</div>
+
+<script>
+(function () {
+  // Every switch on the page emits this script, but only one scroll handler per
+  // background is wanted. The first to run claims the group and watches all of
+  // its switches; the rest return. Waiting for DOMContentLoaded matters —
+  // inline script runs as the page parses, so the switches further down the
+  // page do not exist yet at that point.
+  var bgId = {{ include.bg-id | jsonify }};
+
+  function init() {
+    var background = document.getElementById(bgId + '-image');
+    if (!background) return;
+    if (background.dataset.switchReady === 'on') return;   // already claimed
+    background.dataset.switchReady = 'on';
+
+    var switches = Array.prototype.slice.call(
+      document.querySelectorAll('.bg-switch[data-bg-id="' + bgId + '"]')
+    );
+    if (!switches.length) return;
+
+    var original = background.style.backgroundImage;
+    var scheduled = false;
+
+    function apply() {
+      scheduled = false;
+      var image = original;
+      switches.forEach(function (marker) {
+        if (marker.getBoundingClientRect().top <= window.innerHeight * 0.45) {
+          image = marker.style.backgroundImage;
+        }
+      });
+      background.style.backgroundImage = image;
+    }
+
+    // A one-pixel marker can leap across IntersectionObserver's narrow band
+    // between frames. Sample the last marker already passed instead, so wheel,
+    // keyboard, anchor jumps, and scrolling back up all reach the same view.
+    function schedule() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(apply);
+    }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    apply();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
