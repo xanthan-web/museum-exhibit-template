@@ -2,6 +2,7 @@
   Routes — suggested walks through the museum, read from _data/routes.yml.
 
   Parameters:
+    - heading-level: integer, default 2; level for card titles.
     - limit: show only the first N routes (optional)
 
   Each route shows a row of the objects on it, so a visitor can see the walk
@@ -18,7 +19,7 @@
   <article class="m-route">
     <header class="m-route-head">
       <span class="m-route-minutes">{{ route.minutes }} min</span>
-      <h3>{{ route.title }}</h3>
+      <h{{ include.heading-level | default: 2 }}>{{ route.title }}</h{{ include.heading-level | default: 2 }}>
       <p>{{ route.description }}</p>
     </header>
     <ol class="m-route-stops">

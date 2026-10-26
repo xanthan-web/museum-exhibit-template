@@ -2,6 +2,9 @@
   Essay Grid — essays as a magazine-style grid.
 
   Parameters:
+    - heading-level: integer, default 2; level for card titles.
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
     - items:   the essay pages to show (required)
     - feature: true | false — show the first essay large (default: true)
     - limit:   show only the first N essays (optional)
@@ -10,9 +13,15 @@
   Each card reads title, summary, thumbnail, author, and first tag from the
   essay's own front matter.
 {% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
 
-{% assign do_feature = include.feature | default: true %}
-{% assign sorted_items = include.items | sort: "position" %}
+
+{% assign do_feature = include.feature | default: true, allow_false: true %}
+{% assign sorted_items = museum_items | sort: "position" %}
 {% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
 
 {::nomarkdown}
@@ -31,7 +40,7 @@
         {% endif %}
         <div class="m-essay-body">
           <span class="m-kicker">{{ item.kicker | default: item.tags.first | default: "Essay" | replace: '-', ' ' }}</span>
-          <h3 class="m-essay-title">{{ item.title }}</h3>
+          <h{{ include.heading-level | default: 2 }} class="m-essay-title">{{ item.title }}</h{{ include.heading-level | default: 2 }}>
           {% if item.summary %}<p class="m-essay-summary">{{ item.summary }}</p>{% endif %}
           {% if item.author %}<span class="m-essay-byline">By {{ item.author }}</span>{% endif %}
         </div>

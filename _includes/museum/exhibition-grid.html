@@ -2,13 +2,22 @@
   Exhibition Grid — the museum's rooms as large picture cards.
 
   Parameters:
+    - heading-level: integer, default 2; level for card titles.
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
     - items: the exhibition pages to show (required)
     - limit: show only the first N rooms (optional)
 
   Rooms are ordered by `position:` in each exhibition's front matter.
 {% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
 
-{% assign sorted_items = include.items | sort: "position" %}
+
+{% assign sorted_items = museum_items | sort: "position" %}
 {% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
 
 {::nomarkdown}

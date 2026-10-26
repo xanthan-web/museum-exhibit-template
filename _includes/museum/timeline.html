@@ -3,13 +3,21 @@
   grouped by period.
 
   Parameters:
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
     - items: the object pages to show (required)
 
   Needs `year:` in each object's front matter (a number; negative for BCE).
   Objects without a year are listed at the end under "Undated".
 {% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
 
-{% assign sorted_items = include.items | sort: "year" %}
+
+{% assign sorted_items = museum_items | sort: "year" %}
 {% assign era_keys = "ancient,classical,medieval,modern,undated" | split: "," %}
 
 {::nomarkdown}

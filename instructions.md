@@ -5,7 +5,8 @@ date: 2026-01-01
 summary: Step-by-step instructions for adding your object and essay to the museum.
 ---
 
-<span class="m-kicker">Guide for students</span>
+Guide for students
+{: .m-kicker}
 
 # How to add your work
 
@@ -147,3 +148,13 @@ The site updates a couple of minutes after your instructor approves it.
 | My block shows as text | Check it starts with `{% raw %}{% include{% endraw %}` and ends with `%}`. |
 
 Still stuck? Ask your instructor and share the page name.
+
+## Editing the museum entrance
+
+In `index.md`, change the `hero` title and introduction at the top. Set
+`spotlight` to an object's folder name. Below the front matter, edit the
+headings and paragraphs as Markdown. The include lines assemble the displays;
+you can move whole section pairs to change their order.
+
+Exhibition pages work the same way: write the introduction in Markdown and
+list object folder names and notes under `objects` in the front matter.

@@ -5,7 +5,8 @@ date: 2026-01-01
 summary: What this museum holds, who made it, and how to cite it.
 ---
 
-<span class="m-kicker">About the museum</span>
+About the museum
+{: .m-kicker}
 
 # About this museum
 
